@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserDao">
+    <resultMap id="userResultMap" type="User">
+        <id property="userId" column="user_id"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="cumulativeAmount" column="cumulative_amount"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="sex" column="sex"/>
+        <result property="birthday" column="birthday"/>
+        <result property="restAmount" column="rest_amount"/>
+    </resultMap>
+    <insert id="addUser" parameterType="User">
+        INSERT INTO user(user_id, password, name)
+        VALUE (#{userId}, #{password}, #{name})
+    </insert>
+    <update id="updateUser" parameterType="User">
+        UPDATE user
+        SET
+        <if test="password != null">
+            password = #{password},
+        </if>
+        <if test="name != null">
+            name = #{name},
+        </if>
+        <if test="phoneNumber != null">
+            phone_number = #{phoneNumber},
+        </if>
+        <if test="sex != null">
+            sex = #{sex},
+        </if>
+        <if test="birthday != null">
+            birthday = #{birthday},
+        </if>
+        <if test="restAmount != null">
+            rest_amount = #{restAmount},
+        </if>
+        <if test="cumulativeAmount != null">
+            cumulative_amount = #{cumulativeAmount}
+        </if>
+        WHERE user_id = #{userId}
+    </update>
+    <select id="queryUserById" resultType="User" parameterType="string">
+        SELECT *
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+    <!--<select id="queryUserById" resultMap="userResultMap" parameterType="string">-->
+        <!--SELECT *-->
+        <!--FROM user-->
+        <!--WHERE user_id = #{userId}-->
+    <!--</select>-->
+    <select id="queryAllUser" resultMap="userResultMap">
+        SELECT * FROM user;
+    </select>
+    <select id="getNumberOfUser" resultType="int">
+        SELECT COUNT(user_id) FROM user
+    </select>
+</mapper>
