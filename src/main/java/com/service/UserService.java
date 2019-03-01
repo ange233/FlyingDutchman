@@ -12,7 +12,7 @@ public interface UserService {
 
     int updateUser(User user);
 
-    User queryUserById(String id);
+    User queryUserByName(String name);
 
     List<User> queryAllUser();
 

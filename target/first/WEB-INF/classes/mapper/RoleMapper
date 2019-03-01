@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.RoleDao">
+    <resultMap id="roleResultMap" type="Role">
+        <id property="name" column="roleName"/>
+        <result property="privilege" column="privilege"/>
+    </resultMap>
+    <insert id="addRole" parameterType="Role">
+        INSERT INTO role(roleName, privilege)
+        VALUE (#{name}, #{privilege})
+    </insert>
+    <update id="updateRole" parameterType="Role">
+        UPDATE role
+        SET privilege = #{privilege}
+        WHERE roleName = #{roleName}
+    </update>
+    <select id="queryRoleByName" resultType="Role" parameterType="string">
+        SELECT *
+        FROM role
+        WHERE roleName = #{name}
+    </select>
+    <select id="queryAllRole" resultMap="roleResultMap">
+        SELECT * FROM role;
+    </select>
+</mapper>

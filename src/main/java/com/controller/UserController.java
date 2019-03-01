@@ -18,40 +18,75 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("/toLogin")
+    public String toLogin(Model model){
+        return "login";
+    }
+
+    @RequestMapping("/toRegister")
+    public String toSignUp(Model model){
+        return  "register";
+    }
+
     @RequestMapping("/login")
-    public String toLogin(Model model, String id, String password){
-        model.addAttribute("id", id);
-        model.addAttribute("password", password);
-        return "login";
+    public String login(Model model, String name, String password){
+//        System.out.println("用户名为: " + name + " 密码：" + password);
+        User user = userService.queryUserByName(name);
+        if (user != null){
+            if (user.getPassword().equals(password)){
+                if (user.getRole().equals("SuperAdmin")){
+                    return "admin_main";
+                }else{
+                    return "main";
+                }
+            }else{
+                model.addAttribute("passwordError", "密码错误 ");
+                return "login";
+            }
+        }else{
+            model.addAttribute("usernameError", "用户不存在");
+            return "login";
+        }
     }
 
-    @RequestMapping("/addUser")
-    public String addUser(Model model, String name, String password){
+    @RequestMapping("/register")
+    public String register(Model model, String registerUsername, String registerEmail, String registerPassword){
+        System.out.println("Username: " + registerUsername + " Email: " + registerEmail + " Password: " + registerPassword);
+        // 检测用户名是否已存在
+        User check = userService.queryUserByName(registerUsername);
+        System.out.println("查询到的用户: " + check);
+        if (check != null){
+            model.addAttribute("state", "用户名已存在");
+            return "register";
+        }
+
         User user = new User();
-//        System.out.println("名字啊啊啊啊啊" + name);
-        user.setName(name);
-        user.setPassword(password);
-        int number = userService.getNumberOfUser() + 1000;
-        String id = String.format("%d", number);
-//        System.out.println(id);
-//        System.out.println(user.getPassword());
-        user.setUserId(id);
+        user.setName(registerUsername);
+        user.setPassword(registerPassword);
+        user.setRole("NormalUser");
+        user.setEmail(registerEmail);
         userService.addUser(user);
-        model.addAttribute("userId", id);
-        return "login";
-    }
 
-    @RequestMapping("/toUserLogin")
-    public String toUserLogin(Model model, String userId){
-        model.addAttribute("userId", userId);
-        return "signIn";
+        return "main";
     }
 
     @RequestMapping("/allUser")
     public String list(Model model){
         List<User> list = userService.queryAllUser();
         model.addAttribute("list", list);
-        System.out.println(list.get(0).getBirthday());
+
+        return "index";
+    }
+
+    @RequestMapping("/updateUser")
+    public String updateUser(Model model, String name, String password, String role, String email){
+        User user = new User();
+        user.setName(name);
+        user.setPassword(password);
+        user.setRole(role);
+        user.setEmail(email);
+        userService.updateUser(user);
+
         return "index";
     }
 }

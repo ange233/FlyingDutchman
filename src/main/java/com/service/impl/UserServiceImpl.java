@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService {
         return userDao.updateUser(user);
     }
 
-    public User queryUserById(String id) {
-        return userDao.queryUserById(id);
+    public User queryUserByName(String name) {
+        return userDao.queryUserByName(name);
     }
 
     public List<User> queryAllUser() {

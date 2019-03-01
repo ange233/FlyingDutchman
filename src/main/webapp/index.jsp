@@ -12,7 +12,7 @@
 <form id="form">
     ID:       <input name="id" type="text">
     PASSWORD: <input name="password" type="text">
-    <button style="height: auto; height: auto" value="登录" onclick="login()"></button>
+    <button style="height: auto; height: auto" value="登录" href="login.jsp"></button>
 </form>
 
 </body>
@@ -23,6 +23,13 @@
         form.action = "/user/login";
         form.submit();
     }
+    function init() {
+        var form = document.getElementById("form");
+        form.method = "post";
+        form.action = "/user/toLogin";
+        form.submit();
+    }
+    window.onload = init();
 </script>
 </html>
 

@@ -3,33 +3,21 @@ package com.pojo;
 /**
  * Created by dell on 2018/7/25.
  */
+/*
+    Role: NormalUser
+ */
 public class User {
-    private String userId;
-    private String password;
     private String name;
-    private double cumulativeAmount;
-    private String phoneNumber;
-    private String sex;
-    private String birthday;
-    private double restAmount;
+    private String password;
+    private String role;
+    private String email;
 
-    public User(){
-        userId = "";
-        password = "";
-        name = "";
-        cumulativeAmount = 0;
-        phoneNumber = "";
-        sex = null;
-        birthday = "";
-        restAmount = 0;
+    public String getName() {
+        return name;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -40,51 +28,19 @@ public class User {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getRole() {
+        return role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public double getCumulativeAmount() {
-        return cumulativeAmount;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCumulativeAmount(double cumulativeAmount) {
-        this.cumulativeAmount = cumulativeAmount;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public double getRestAmount() {
-        return restAmount;
-    }
-
-    public void setRestAmount(double restAmount) {
-        this.restAmount = restAmount;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

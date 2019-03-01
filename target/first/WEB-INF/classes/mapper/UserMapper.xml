@@ -4,18 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.UserDao">
     <resultMap id="userResultMap" type="User">
-        <id property="userId" column="user_id"/>
+        <id property="name" column="userName"/>
         <result property="password" column="password"/>
-        <result property="name" column="name"/>
-        <result property="cumulativeAmount" column="cumulative_amount"/>
-        <result property="phoneNumber" column="phone_number"/>
-        <result property="sex" column="sex"/>
-        <result property="birthday" column="birthday"/>
-        <result property="restAmount" column="rest_amount"/>
+        <result property="role" column="roleName"/>
+        <result property="email" column="email"/>
     </resultMap>
     <insert id="addUser" parameterType="User">
-        INSERT INTO user(user_id, password, name)
-        VALUE (#{userId}, #{password}, #{name})
+        INSERT INTO user(userName, password, roleName, email)
+        VALUE (#{name}, #{password}, #{role}, #{email})
     </insert>
     <update id="updateUser" parameterType="User">
         UPDATE user
@@ -23,40 +19,23 @@
         <if test="password != null">
             password = #{password},
         </if>
-        <if test="name != null">
-            name = #{name},
+        <if test="role != null">
+            roleName = #{role},
         </if>
-        <if test="phoneNumber != null">
-            phone_number = #{phoneNumber},
+        <if test="email != null">
+            email = #{email},
         </if>
-        <if test="sex != null">
-            sex = #{sex},
-        </if>
-        <if test="birthday != null">
-            birthday = #{birthday},
-        </if>
-        <if test="restAmount != null">
-            rest_amount = #{restAmount},
-        </if>
-        <if test="cumulativeAmount != null">
-            cumulative_amount = #{cumulativeAmount}
-        </if>
-        WHERE user_id = #{userId}
+        WHERE userName = #{name}
     </update>
-    <select id="queryUserById" resultType="User" parameterType="string">
+    <select id="queryUserByName" resultMap="userResultMap" parameterType="string">
         SELECT *
         FROM user
-        WHERE user_id = #{userId}
+        WHERE userName = #{name}
     </select>
-    <!--<select id="queryUserById" resultMap="userResultMap" parameterType="string">-->
-        <!--SELECT *-->
-        <!--FROM user-->
-        <!--WHERE user_id = #{userId}-->
-    <!--</select>-->
     <select id="queryAllUser" resultMap="userResultMap">
         SELECT * FROM user;
     </select>
     <select id="getNumberOfUser" resultType="int">
-        SELECT COUNT(user_id) FROM user
+        SELECT COUNT(id) FROM user
     </select>
 </mapper>
